@@ -27,7 +27,7 @@ int main()
             cipher(flag);
 
         // if the user chose an invalid number
-        else
+        else if (flag != 3)
             cout << "\nERROR: INVALID CHOICE";
 
         // ends the do-while menu when the flag is set to 3
@@ -50,18 +50,21 @@ void cipher(int userChoice)
     }
 
     // asks and takes the user's inputText/encypted word
-    cout << "\n\nInput: " << inputAction;
+    cout << "\nInput: " << inputAction;
     cin >> inputText;
+
+    // string used to reconstruct the capitalization of the inputText
     string punctPreserve = inputText;
 
     // asks and takes the user's keyword
-    cout << "\nWhat is the keyword: ";
+    cout << "Keyword: ";
     cin >> keyword;
 
-    // declares an int vector called numerickeyword
+    // declares a string to be used as the program's new keyword
     string numerickeyword;
 
-    // Extends keyword to fit the plaintext
+    // Extends keyword to fit the plaintext by repeating the keyword for every letter in the plaintext. This guarantees the new
+    //keyword will be as long as the inputted text
     for (int i = 0; i < inputText.length(); i++)
     {
         for (int i = 0; i < keyword.size(); i++)
@@ -70,44 +73,46 @@ void cipher(int userChoice)
         }
     }
 
-    // used to construct the output
+    // used to push the calculated letter to the output;
     char y = ' ';
 
-    // Encrypts
+    // Encrypts the plaintext
     if (userChoice == 1)
     {
 
         for (int i = 0; i < inputText.length(); i++)
         {
-
+            // converts the two letters to uppercases and adds the calculated value to y
             y = char(int(toupper(inputText[i]) + toupper(numerickeyword[i])) % 26 + 65);
 
+            // y is added to the end of the output
             outputText.push_back(y);
-            cout << int(outputText[i]) << " ";
         }
     }
 
-    // decrypts 
+    // decrypts the encrypted text
     else
     {
         for (int i = 0; i < inputText.length(); i++)
         {
+            // converts the two letters to uppercases and subtracts them to calculate the original letter
+            y = char(int(toupper(inputText[i]) - toupper(numerickeyword[i]) - 26) % 26 + 91);
 
-            y = char(int(toupper(inputText[i]) - toupper(numerickeyword[i])) % 26 + 65);
-
+            // y is added to the end of output
             outputText.push_back(y);
-            cout << int(outputText[i]) << " ";
         }
     }
 
     // Ensures punctuation is preserved
     for (int i = 0; i < inputText.length(); i++)
     {
+        // if the pre-cipher letter is lowercase, the outputted letter is converted into a lowercase
         if (islower(punctPreserve[i]))
         {
             outputText[i] = tolower(outputText[i]);
         }
     }
 
-    cout << "\nOutput: " << outputAction << outputText;
+    // outputs the de/ciphered text
+    cout << "Output: " << outputAction << outputText << endl;
 }
