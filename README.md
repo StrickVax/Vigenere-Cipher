@@ -1,2 +1,12 @@
-# Vigenere-Cipher
-A program that can cipher and decipher text with an alphabetical key.
+
+# Description:
+
+A program that uses a repeating key as a Caesar’s cipher in order to encrypt or decrypt words.
+
+# Contributors:
+
+* StrickVax
+
+# Version:
+
+1.0
