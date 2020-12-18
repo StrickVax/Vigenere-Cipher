@@ -1,5 +1,4 @@
 #include <iostream>
-#include <vector>
 
 using namespace std;
 
@@ -40,37 +39,75 @@ int main()
 // function body
 void cipher(int userChoice)
 {
-    // declares codeWord, key, and the cipherAction (encryption by default)
-    string codeWord, userWord, key, cipherAction = "encrypt";
+    // declares outputText and keyword. inputAction and outputAction print the approriate menu
+    string outputText = "", inputText, keyword, inputAction = "Plaintext: ", outputAction = "Ciphertext: ";
 
-    // if the user chose to decrypt, the cipherAction is switched to decryption
+    // if the user chose to decrypt, the input and output actions are switched
     if (userChoice == 2)
-        cipherAction = "decrypt";
-
-    // asks and takes the user's plaintext/encypted word
-    cout << "\n\nWhat would you like to " << cipherAction << ": ";
-    cin >> userWord;
-
-    // asks and takes the user's key
-    cout << "\nWhat is the key: ";
-    cin >> key;
-
-    // declares an int vector called numericKey
-    vector<int> numericKey;
-
-    for (int i = 0; i < key.length(); i++)
     {
+        inputAction = "Ciphertext: ";
+        outputAction = "Plaintext: ";
     }
 
+    // asks and takes the user's inputText/encypted word
+    cout << "\n\nInput: " << inputAction;
+    cin >> inputText;
+    string punctPreserve = inputText;
+
+    // asks and takes the user's keyword
+    cout << "\nWhat is the keyword: ";
+    cin >> keyword;
+
+    // declares an int vector called numerickeyword
+    string numerickeyword;
+
+    // Extends keyword to fit the plaintext
+    for (int i = 0; i < inputText.length(); i++)
+    {
+        for (int i = 0; i < keyword.size(); i++)
+        {
+            numerickeyword.push_back(keyword[i]);
+        }
+    }
+
+    // used to construct the output
+    char y = ' ';
+
+    // Encrypts
     if (userChoice == 1)
     {
+
+        for (int i = 0; i < inputText.length(); i++)
+        {
+
+            y = char(int(toupper(inputText[i]) + toupper(numerickeyword[i])) % 26 + 65);
+
+            outputText.push_back(y);
+            cout << int(outputText[i]) << " ";
+        }
     }
 
+    // decrypts 
     else
     {
+        for (int i = 0; i < inputText.length(); i++)
+        {
+
+            y = char(int(toupper(inputText[i]) - toupper(numerickeyword[i])) % 26 + 65);
+
+            outputText.push_back(y);
+            cout << int(outputText[i]) << " ";
+        }
     }
 
-    cout << "\nPlaintext : " << userWord;
-    cout << "\nKeyword : " << key;
-    cout << "\nEncrypted : " << codeWord;
+    // Ensures punctuation is preserved
+    for (int i = 0; i < inputText.length(); i++)
+    {
+        if (islower(punctPreserve[i]))
+        {
+            outputText[i] = tolower(outputText[i]);
+        }
+    }
+
+    cout << "\nOutput: " << outputAction << outputText;
 }
