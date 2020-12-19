@@ -2,8 +2,9 @@
 
 using namespace std;
 
-// function header
+// function headers
 void cipher(int);
+void inputString(char[], string &);
 void keywordGenerator(string, string, string &);
 void textPreserver(string, string &);
 
@@ -43,6 +44,7 @@ void cipher(int userChoice)
 {
     // declares outputText and keyword. inputAction and outputAction print the approriate menu
     string outputText = "", inputText, keyword, inputAction = "Plaintext: ", outputAction = "Ciphertext: ";
+    char userInput[100];
 
     // if the user chose to decrypt, the input and output actions are switched
     if (userChoice == 2)
@@ -53,7 +55,11 @@ void cipher(int userChoice)
 
     // asks and takes the user's inputText/encypted word
     cout << "\nInput: " << inputAction;
-    cin >> inputText;
+    // cin >> inputText;
+    cin.clear();
+    cin.sync();
+    cin.getline(userInput, 100);
+    inputString(userInput, inputText);
 
     // string used to reconstruct the capitalization of the inputText
     string punctPreserve = inputText;
@@ -72,11 +78,13 @@ void cipher(int userChoice)
 
     for (int i = 0; i < inputText.length(); i++)
     {
+        if (inputText[i] == ' ')
+            continue;
         if (userChoice == 1)
             // converts the two letters to uppercases and adds the calculated value to y
             y = char(int(toupper(inputText[i]) + toupper(numerickeyword[i])) % 26 + 65);
         else
-            y = char(int(toupper(inputText[i]) - toupper(numerickeyword[i]) - 26) % 26 + 91);
+            y = char(int(toupper(inputText[i]) - toupper(numerickeyword[i])) % 26 + 65);
 
         // y is added to the end of the output
         outputText.push_back(y);
@@ -86,8 +94,19 @@ void cipher(int userChoice)
 
     // outputs the de/ciphered text
     cout << "Output: " << outputAction << outputText << endl;
+    cout << numerickeyword;
 }
 
+void inputString(char userInput[], string &inputText)
+{
+    for (int i = 0;; i++)
+        if (userInput[i] != '\0')
+            inputText.push_back(userInput[i]);
+        else
+            break;
+}
+
+// function tha
 void keywordGenerator(string inputText, string keyword, string &numerickeyword)
 {
     // Extends keyword to fit the plaintext by repeating the keyword for every letter in the plaintext. This guarantees the new
@@ -101,6 +120,7 @@ void keywordGenerator(string inputText, string keyword, string &numerickeyword)
     }
 }
 
+// function that preserves the capitals of the original text
 void textPreserver(string punctPreserve, string &outputText)
 {
     // Ensures punctuation is preserved
