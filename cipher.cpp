@@ -33,7 +33,7 @@ int main()
         }
 
         // checks to see if user input is even a number
-        if (cin.fail())
+        else if (cin.fail())
         {
             cout << "\nERROR: CHOICE MUST BE A NUMBER";
             cin.clear();
