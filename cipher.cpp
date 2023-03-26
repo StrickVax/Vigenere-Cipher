@@ -20,18 +20,31 @@ int main()
         cout << "\nWhat would you like to do?"
              << "\n1) Encrpyt"
              << "\n2) Decrypt"
-             << "\n3) Exit program\n";
+             << "\n3) Exit program\n"
+             << endl;
 
         // takes user input and uses it to select a menu option
         cin >> flag;
 
         // if the user chose 1 or 2, the cipher function is called, along with what they wanted to do (encrypt or decrypt)
         if (flag == 1 || flag == 2)
+        {
             cipher(flag);
+        }
+
+        // checks to see if user input is even a number
+        if (cin.fail())
+        {
+            cout << "\nERROR: CHOICE MUST BE A NUMBER";
+            cin.clear();
+            cin.ignore();
+        }
 
         // if the user chose an invalid number
         else if (flag != 3)
-            cout << "\nERROR: INVALID CHOICE";
+        {
+            cout << "\nERROR: INVALID NUMBER";
+        }
 
         // ends the do-while menu when the flag is set to 3
     } while (flag != 3);
@@ -110,7 +123,7 @@ void inputString(char userInput[], string &inputText)
 void keywordGenerator(string inputText, string keyword, string &numerickeyword)
 {
     // Extends keyword to fit the plaintext by repeating the keyword for every letter in the plaintext. This guarantees the new
-    //keyword will be as long as the inputted text
+    // keyword will be as long as the inputted text
     for (int i = 0; i < inputText.length(); i++)
     {
         for (int i = 0; i < keyword.size(); i++)
