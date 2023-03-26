@@ -92,12 +92,22 @@ void cipher(int userChoice)
     for (int i = 0; i < inputText.length(); i++)
     {
         if (inputText[i] == ' ')
+        {
             continue;
+        }
         if (userChoice == 1)
+        {
             // converts the two letters to uppercases and adds the calculated value to y
             y = char(int(toupper(inputText[i]) + toupper(numerickeyword[i])) % 26 + 65);
+        }
         else
+        {
+            cout << int(toupper(inputText[i])) - int(toupper(numerickeyword[i])) << endl;
+
+            // ISSUE: Instead of looping back to the orginal letter, it will go into
+            // ASCIIs that are lower than A [65] , such as @ [64]
             y = char(int(toupper(inputText[i]) - toupper(numerickeyword[i])) % 26 + 65);
+        }
 
         // y is added to the end of the output
         outputText.push_back(y);
@@ -107,7 +117,8 @@ void cipher(int userChoice)
 
     // outputs the de/ciphered text
     cout << "Output: " << outputAction << outputText << endl;
-    cout << numerickeyword;
+    cout << numerickeyword << endl
+         << endl;
 }
 
 void inputString(char userInput[], string &inputText)
