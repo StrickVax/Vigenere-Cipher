@@ -106,7 +106,14 @@ void cipher(int userChoice)
 
             // ISSUE: Instead of looping back to the orginal letter, it will go into
             // ASCIIs that are lower than A [65] , such as @ [64]
-            y = char(int(toupper(inputText[i]) - toupper(numerickeyword[i])) % 26 + 65);
+            if (int(toupper(inputText[i])) - int(toupper(numerickeyword[i])) < 0)
+            {
+                y = char(int(toupper(inputText[i]) - toupper(numerickeyword[i])) % 26 + 91);
+            }
+            else
+            {
+                y = char(int(toupper(inputText[i]) - toupper(numerickeyword[i])) % 26 + 65);
+            }
         }
 
         // y is added to the end of the output
