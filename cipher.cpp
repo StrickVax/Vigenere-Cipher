@@ -1,62 +1,11 @@
 #include <iostream>
-
-using namespace std;
-
-// function headers
-void cipher(int);
-void inputString(char[], string &);
-void keywordGenerator(string, string, string &);
-void textPreserver(string, string &);
-
-int main()
-{
-    // declares a do-while sentry
-    int flag;
-
-    // do-while menu
-    do
-    {
-        // prints out the options the user has
-        cout << "\nWhat would you like to do?"
-             << "\n1) Encrpyt"
-             << "\n2) Decrypt"
-             << "\n3) Exit program\n"
-             << endl;
-
-        // takes user input and uses it to select a menu option
-        cin >> flag;
-
-        // if the user chose 1 or 2, the cipher function is called, along with what they wanted to do (encrypt or decrypt)
-        if (flag == 1 || flag == 2)
-        {
-            cipher(flag);
-        }
-
-        // checks to see if user input is even a number
-        else if (cin.fail())
-        {
-            cout << "\nERROR: CHOICE MUST BE A NUMBER";
-            cin.clear();
-            cin.ignore();
-        }
-
-        // if the user chose an invalid number
-        else if (flag != 3)
-        {
-            cout << "\nERROR: INVALID NUMBER";
-        }
-
-        // ends the do-while menu when the flag is set to 3
-    } while (flag != 3);
-
-    return 0;
-}
+#include "cipher.h"
 
 // function body
 void cipher(int userChoice)
 {
     // declares outputText and keyword. inputAction and outputAction print the approriate menu
-    string outputText = "", inputText, keyword, inputAction = "Plaintext: ", outputAction = "Ciphertext: ";
+    std::string outputText = "", inputText, keyword, inputAction = "Plaintext: ", outputAction = "Ciphertext: ";
     char userInput[100];
 
     // if the user chose to decrypt, the input and output actions are switched
@@ -67,21 +16,21 @@ void cipher(int userChoice)
     }
 
     // asks and takes the user's inputText/encypted word
-    cout << "\nInput: " << inputAction;
-    // cin >> inputText;
-    cin.clear();
-    cin.sync();
-    cin.getline(userInput, 100);
+    std::cout << "\nInput: " << inputAction;
+    // std::cin >> inputText;
+    std::cin.clear();
+    std::cin.sync();
+    std::cin.getline(userInput, 100);
     inputString(userInput, inputText);
 
-    // string used to reconstruct the capitalization of the inputText
-    string punctPreserve = inputText;
+    // std::string used to reconstruct the capitalization of the inputText
+    std::string punctPreserve = inputText;
 
     // asks and takes the user's keyword
-    cout << "Keyword: ";
-    cin >> keyword;
+    std::cout << "Keyword: ";
+    std::cin >> keyword;
 
-    string numerickeyword;
+    std::string numerickeyword;
     keywordGenerator(inputText, keyword, numerickeyword);
 
     // used to push the calculated letter to the output;
@@ -102,7 +51,7 @@ void cipher(int userChoice)
         }
         else
         {
-            cout << int(toupper(inputText[i])) - int(toupper(numerickeyword[i])) << endl;
+            std::cout << int(toupper(inputText[i])) - int(toupper(numerickeyword[i])) << std::endl;
 
             // ISSUE: Instead of looping back to the orginal letter, it will go into
             // ASCIIs that are lower than A [65] , such as @ [64]
@@ -123,12 +72,12 @@ void cipher(int userChoice)
     textPreserver(punctPreserve, outputText);
 
     // outputs the de/ciphered text
-    cout << "Output: " << outputAction << outputText << endl;
-    cout << numerickeyword << endl
-         << endl;
+    std::cout << "Output: " << outputAction << outputText << std::endl;
+    std::cout << numerickeyword << std::endl
+              << std::endl;
 }
 
-void inputString(char userInput[], string &inputText)
+void inputString(char userInput[], std::string &inputText)
 {
     for (int i = 0;; i++)
         if (userInput[i] != '\0')
@@ -138,7 +87,7 @@ void inputString(char userInput[], string &inputText)
 }
 
 // function tha
-void keywordGenerator(string inputText, string keyword, string &numerickeyword)
+void keywordGenerator(std::string inputText, std::string keyword, std::string &numerickeyword)
 {
     // Extends keyword to fit the plaintext by repeating the keyword for every letter in the plaintext. This guarantees the new
     // keyword will be as long as the inputted text
@@ -152,7 +101,7 @@ void keywordGenerator(string inputText, string keyword, string &numerickeyword)
 }
 
 // function that preserves the capitals of the original text
-void textPreserver(string punctPreserve, string &outputText)
+void textPreserver(std::string punctPreserve, std::string &outputText)
 {
     // Ensures punctuation is preserved
     for (int i = 0; i < punctPreserve.length(); i++)
